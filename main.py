@@ -11,12 +11,13 @@ from utils.img_proccessing import read_imagefile
 classifier = None
 # initialize app as FastAPI object
 app_desc = """
-<h2>Try this app by uploading any image with `predict/nudity`</h2>
+<h2>This app for checking nudity of images</h2>
+<h2>Try this app by uploading any image to `/classify`</h2>
 <br>`by Alibek Erkabayev`
-<br>`alibek060395@gmail.com`
-<br>`https://lazylearning.me/`
+<br>alibek060395@gmail.com
+<br><a href="https://lazylearning.me/">My portfolio</a>
 """
-app = FastAPI(title='NudeNET FastAPI deployment ready', description=app_desc)
+app = FastAPI(title='API of NSFW checker', description=app_desc)
 
 
 @app.on_event("startup")
