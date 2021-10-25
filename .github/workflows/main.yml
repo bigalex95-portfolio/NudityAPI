@@ -1,0 +1,17 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{27364def-d4fb-410d-9cc0-4233dccef6b3}}
+          heroku_app_name: "nudityapi" #Must be unique in Heroku
+          heroku_email: "alibek060395@gmail.com"
