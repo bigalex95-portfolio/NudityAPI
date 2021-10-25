@@ -4,3 +4,4 @@ gunicorn
 uvicorn
 numpy
 nudenet
+python-multipart
