@@ -12,12 +12,15 @@ classifier = None
 # initialize app as FastAPI object
 app_desc = """
 <h2>This app for checking nudity of images</h2>
-<h2>Try this app by uploading any image to `/classify`</h2>
-<br>`by Alibek Erkabayev`
-<br>alibek060395@gmail.com
-<br><a href="https://lazylearning.me/">My portfolio</a>
+<h2>Try this app by uploading any image to `/classify/image` or enter url of image to `/classify/url`</h2>
+<br>
+<ul>
+  <li>Alibek Erkabayev</li>
+  <li>alibek060395@gmail.com</li>
+  <li><a href="https://lazylearning.me/">My portfolio</a></li>
+</ul>
 """
-app = FastAPI(title='API of NSFW checker', description=app_desc)
+app = FastAPI(title='NSFW checker', description=app_desc)
 
 
 @app.on_event("startup")
@@ -32,8 +35,8 @@ async def index():
     return RedirectResponse(url="/docs")
 
 
-@app.post("/classify")
-async def classify_api(file: UploadFile = File(...)):
+@app.post("/classify/image")
+async def classify_image_api(file: UploadFile = File(...)):
     extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
     if not extension:
         return "Image must be jpg or png format!"
@@ -42,6 +45,9 @@ async def classify_api(file: UploadFile = File(...)):
     # prediction.get("0").get("safe")
     return prediction
 
+"""
+TODO: write /classify/url function
+"""
 
 if __name__ == "__main__":
     uvicorn.run(app, debug=True)
