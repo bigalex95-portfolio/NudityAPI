@@ -1,0 +1,6 @@
+fastapi
+starlette
+gunicorn
+uvicorn
+numpy
+nudenet
