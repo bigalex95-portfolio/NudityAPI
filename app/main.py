@@ -49,5 +49,5 @@ async def classify_image_api(file: UploadFile = File(...)):
 TODO: write /classify/url function
 """
 
-if __name__ == "__main__":
-    uvicorn.run(app, debug=True)
+# if __name__ == "__main__":
+#     uvicorn.run(app, debug=True)

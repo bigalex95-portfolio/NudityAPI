@@ -1,0 +1,16 @@
+# Dockerfile
+
+FROM tiangolo/uvicorn-gunicorn:python3.8-slim
+
+LABEL maintainer="Alibek Erkabayev <alibek060395@gmail.com>"
+
+# set work directory
+WORKDIR /app
+# COPY ./app /app
+
+# install dependencies
+COPY requirements.txt /app
+RUN pip install --upgrade pip
+RUN pip install -r /app/requirements.txt
+
+# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
