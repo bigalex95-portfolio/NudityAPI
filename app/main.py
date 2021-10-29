@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI, File, UploadFile
 from starlette.responses import RedirectResponse
 
-from utils.img_proccessing import read_imagefile
+from utils import read_imagefile
 
 
 classifier = None
