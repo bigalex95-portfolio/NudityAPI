@@ -23,5 +23,5 @@ jobs:
       run: docker-compose up -d --build
     
     - name: Push image
-      run: docker tag nudity:latest nudity:latest 
+      run: docker tag nudity:latest ${{secrets.DOCKERHUB_USERNAME}}/nudity:latest 
       run: docker push ${{secrets.DOCKERHUB_USERNAME}}/nudity:latest     
