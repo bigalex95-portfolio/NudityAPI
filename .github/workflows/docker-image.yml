@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    environment: prod
+    runs-on: ubuntu-latest
+    env:
+    - DOCKERHUB_ACCESS_KEY: ${{secrets.DOCKERHUB_ACCESS_KEY}}
+    - DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Dokcer Hub login
+
+      run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_ACCESS_KEY
+    
+    - name: Build the Docker image
+      run: docker-compose up -d --build
+    
+    - name: Push image
+      run: docker tag nudity:latest nudity:latest 
+      run: docker push ${{secrets.DOCKERHUB_USERNAME}}/nudity:latest     
