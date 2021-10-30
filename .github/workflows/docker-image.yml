@@ -28,8 +28,12 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest    
   
   deploy-on-prod:
+    needs: build
     runs-on: ubuntu-latest
     steps:
+    - name: Generate ssh keys
+      run: ssh-keygen -t rsa -b 4096 -C "test@test.comf"
+      
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
       with:
