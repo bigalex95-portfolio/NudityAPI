@@ -28,7 +28,7 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest    
   
   deploy-on-prod:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
