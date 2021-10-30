@@ -51,7 +51,7 @@ jobs:
       run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container rm nudity
 
     - name: Create a new docker container
-      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker run --name=nudity --restart=always -d bigalex95/nudity:latest
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker run -p 80:80 --name=nudity --restart=always -d bigalex95/nudity:latest
     
     - name: Remove unused docker images
       run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker image prune -f
@@ -80,7 +80,7 @@ jobs:
       run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker container rm nudity
 
     - name: Create a new docker container
-      run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker run --name=nudity --restart=always -d bigalex95/nudity:latest
+      run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker run -p 80:80 --name=nudity --restart=always -d bigalex95/nudity:latest
     
     - name: Remove unused docker images
       run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker image prune -f
