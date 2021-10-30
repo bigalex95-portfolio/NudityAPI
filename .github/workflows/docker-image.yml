@@ -27,7 +27,7 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest    
   
-  deploy-on-prod:
+  deploy-on-prod1:
     needs: build
     environment: prod
     runs-on: ubuntu-latest
@@ -44,12 +44,38 @@ jobs:
     - name: Pull update nudity image
       run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest
     
-    - name: Stop docker container
-      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container stop nudity
-
-    - name: Remove old docker container
-      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container rm nudity
+    - name: Stop and remove old docker container
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container stop nudity && docker container rm nudity
 
     - name: Create a new docker container
       run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker run --name=nudity --restart=always -d bigalex95/nudity:latest
+    
+    - name: Remove unused docker images
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker image prune -f
+
+  deploy-on-prod2:
+    needs: build
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+    
+    - name: Adding Known Hosts
+      run: ssh-keyscan -H ${{ secrets.SSH_HOST_2 }} >> ~/.ssh/known_hosts
+    
+    - name: Pull update nudity image
+      run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest
+    
+    - name: Stop and remove old docker container
+      run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker container stop nudity && docker container rm nudity
+
+    - name: Create a new docker container
+      run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker run --name=nudity --restart=always -d bigalex95/nudity:latest
+    
+    - name: Remove unused docker images
+      run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker image prune -f
       
