@@ -26,3 +26,24 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest    
+  
+  deploy-on-prod:
+    runs-on: ubuntu:latest
+    steps:
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    
+    - name: Pull update nudity image
+      run: doctl compute ssh --ssh-private-ip 10.114.0.3 --ssh-command docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest
+    
+    - name: Stop docker container
+      run: doctl compute ssh --ssh-private-ip 10.114.0.3 --ssh-command docker container stop nudity
+
+    - name: Remove old docker container
+      run: doctl compute ssh --ssh-private-ip 10.114.0.3 --ssh-command docker container rm nudity
+
+    - name: Create a new docker container
+      run: doctl compute ssh --ssh-private-ip 10.114.0.3 --ssh-command docker run --name=nudity --restart=always -d bigalex95/nudity:latest
+      
