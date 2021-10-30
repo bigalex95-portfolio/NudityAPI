@@ -44,8 +44,11 @@ jobs:
     - name: Pull update nudity image
       run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest
     
-    - name: Stop and remove old docker container
-      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container stop nudity && docker container rm nudity
+    - name: Stop old docker container
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container stop nudity
+
+    - name: Remove old docker container
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container rm nudity
 
     - name: Create a new docker container
       run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker run --name=nudity --restart=always -d bigalex95/nudity:latest
@@ -70,8 +73,11 @@ jobs:
     - name: Pull update nudity image
       run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest
     
-    - name: Stop and remove old docker container
-      run: ssh root@${{ secrets.SSH_HOST_2 }} -C "docker container stop nudity && docker container rm nudity"
+    - name: Stop old docker container
+      run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker container stop nudity
+
+    - name: Remove old docker container
+      run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker container rm nudity
 
     - name: Create a new docker container
       run: ssh root@${{ secrets.SSH_HOST_2 }} -C docker run --name=nudity --restart=always -d bigalex95/nudity:latest
