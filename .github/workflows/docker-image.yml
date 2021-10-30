@@ -40,21 +40,16 @@ jobs:
     
     - name: Adding Known Hosts
       run: ssh-keyscan -H ${{ secrets.SSH_HOST_1 }} >> ~/.ssh/known_hosts
-      
-    - name: Install doctl
-      uses: digitalocean/action-doctl@v2
-      with:
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     
     - name: Pull update nudity image
-      run: doctl compute ssh ${{ secrets.SSH_HOST_1 }} --ssh-command docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nudity:latest
     
     - name: Stop docker container
-      run: doctl compute ssh ${{ secrets.SSH_HOST_1 }} --ssh-command docker container stop nudity
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container stop nudity
 
     - name: Remove old docker container
-      run: doctl compute ssh ${{ secrets.SSH_HOST_1 }} --ssh-command docker container rm nudity
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker container rm nudity
 
     - name: Create a new docker container
-      run: doctl compute ssh ${{ secrets.SSH_HOST_1 }} --ssh-command docker run --name=nudity --restart=always -d bigalex95/nudity:latest
+      run: ssh root@${{ secrets.SSH_HOST_1 }} -C docker run --name=nudity --restart=always -d bigalex95/nudity:latest
       
