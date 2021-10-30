@@ -10,12 +10,13 @@ jobs:
   build:
     environment: prod
     runs-on: ubuntu-latest
+    env:
+    - DOCKERHUB_ACCESS_KEY: ${{secrets.DOCKERHUB_ACCESS_KEY}}
+    - DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
     steps:
     - uses: actions/checkout@v2
     - name: Dokcer Hub login
-      env:
-        - DOCKERHUB_ACCESS_KEY: ${{secrets.DOCKERHUB_ACCESS_KEY}}
-        - DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+
       run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_ACCESS_KEY
     
     - name: Build the Docker image
