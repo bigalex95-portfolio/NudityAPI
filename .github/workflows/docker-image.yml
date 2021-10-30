@@ -16,7 +16,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Dokcer Hub login
-
       run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_ACCESS_KEY
     
     - name: Build and push
