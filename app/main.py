@@ -25,9 +25,6 @@ app = FastAPI(title='NSFW checker', description=app_desc)
 
 
 origins = [
-    "http://localhost:3000",
-    "88.241.35.115",
-    "88.241.35.115:3000"
 ]
 
 app.add_middleware(
