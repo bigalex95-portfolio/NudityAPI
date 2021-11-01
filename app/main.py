@@ -3,6 +3,7 @@ from nudenet import NudeClassifier
 
 import uvicorn
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 
 from utils.img_proccessing import read_imagefile
@@ -22,6 +23,18 @@ app_desc = """
 """
 app = FastAPI(title='NSFW checker', description=app_desc)
 
+
+origins = [
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 async def load_model():
