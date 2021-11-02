@@ -85,11 +85,6 @@ async def detect_image_api(file: UploadFile = File(...)):
     return Response(bytes_io.getvalue(), media_type="image/png")
 
 
-"""
-TODO: write /classify/url function
-"""
-
-
 @app.post("/classify/url/{url:path}")
 async def classify_url_api(url: str):
     # print("-"*40)
