@@ -16,7 +16,8 @@ detector = None
 # initialize app as FastAPI object
 app_desc = """
 <h2>This app for checking nudity of images</h2>
-<h2>Try this app by uploading any image to `/classify/image` or enter url of image to `/classify/url`</h2>
+<h2>Try this app by uploading any image to `/classify/image/` or enter url of image to `/classify/url/`</h2>
+<h2>Get images with bounding boxes by uploading any image to `/detect/image/` or enter url of image to `/detect/url/`</h2>
 <br>
 <ul>
   <li>Alibek Erkabayev</li>
